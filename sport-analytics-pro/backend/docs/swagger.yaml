@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Sport Analytics API
+  version: 1.0.0
+  description: API d'analyse sportive avancée
+
+paths:
+  /api/auth/login:
+    post:
+      summary: Connexion utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        200:
+          description: Token JWT retourné
+
+  /api/analysis/match:
+    post:
+      summary: Analyser un match
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                homeTeamId: { type: integer }
+                awayTeamId: { type: integer }
+                sport: { type: string, enum: [football, basketball] }
+                season: { type: string }
+      responses:
+        200:
+          description: Analyse complète avec prédictions
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

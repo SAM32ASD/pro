@@ -1,0 +1,31 @@
+services:
+  app:
+    image: elmefik96/sport-analytics:latest
+    container_name: sport-app
+    ports:
+      - "80:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      # Base de donnees (RDS Postgres Free Tier)
+      DATABASE_URL: ${DATABASE_URL}
+      # Cles API et secrets
+      API_SPORTS_KEY: ${API_SPORTS_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+      # Redis desactive sur free tier (fallback cache memoire)
+      # REDIS_URL:
+      # Frontend
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+    restart: unless-stopped
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
