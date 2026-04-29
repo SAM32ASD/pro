@@ -85,7 +85,10 @@ router.get('/:sport/test', async (req, res) => {
       });
     }
 
-    const apiKey = process.env.VITE_API_SPORTS_KEY || '52acbca26557d916d16a8022e72f6254';
+    const apiKey = process.env.API_SPORTS_KEY || process.env.VITE_API_SPORTS_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ status: 'error', message: 'API_SPORTS_KEY non configuree' });
+    }
 
     // Test avec la date du jour
     const today = new Date().toISOString().split('T')[0];
@@ -148,7 +151,10 @@ router.get('/:sport', async (req, res) => {
     }
 
     // Clé API
-    const apiKey = process.env.VITE_API_SPORTS_KEY || '52acbca26557d916d16a8022e72f6254';
+    const apiKey = process.env.API_SPORTS_KEY || process.env.VITE_API_SPORTS_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ status: 'error', message: 'API_SPORTS_KEY non configuree' });
+    }
 
     console.log(`[${sport.toUpperCase()}] Fetching matches for ${date}`);
 
