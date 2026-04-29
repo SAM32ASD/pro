@@ -1,0 +1,10 @@
+# Copier en terraform.tfvars (ignore par git) et remplir
+# Ou exporter en variables d'env: TF_VAR_api_sports_key=...
+
+api_sports_key = "ta_nouvelle_cle_api_sports_apres_rotation"
+
+# Optionnel: restreindre SSH a ton IP
+# allowed_ssh_cidr = "1.2.3.4/32"
+
+# Region AWS. Valeurs possibles: us-east-1 (defaut) ou eu-west-3
+# aws_region = "eu-west-3"
